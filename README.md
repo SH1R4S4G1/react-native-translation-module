@@ -10,8 +10,8 @@ Using the "Translation", a standard API added to iOS 17.4 and above, you can eas
 - translationPresentation(isPresented:text:attachmentAnchor:arrowEdge:replacementAction:)
   https://developer.apple.com/documentation/swiftui/view/translationpresentation(ispresented:text:attachmentanchor:arrowedge:replacementaction:)
 
-showTranslationPopoverに文字列を与えてください！翻訳結果をPromise<string>で返します。途中で変換をキャンセルした場合、変換前の文字列がPromise<string>で返却されます。
-Just give the showTranslationPopover a string! The translation result is returned as a Promise<string>. If you cancel the translation in the middle, the string before the translation is returned in Promise<string>.
+showTranslationPopoverに文字列を与えてください！翻訳結果をPromise\<string\>で返します。途中で変換をキャンセルした場合、変換前の文字列がPromise\<string\>で返却されます。
+Just give the showTranslationPopover a string! The translation result is returned as a Promise\<string\>. If you cancel the translation in the middle, the string before the translation is returned in Promise\<string\>.
 
 ```js
 const translatedText = await showTranslationPopover('Hello, world!');
@@ -107,13 +107,13 @@ This module only supports iOS. To use it in an iOS project, follow these steps:
 1. Run the following command in the root directory of your project to install the necessary dependencies:
 
 ```sh
-yarn pod-install
+npm run pod-install
 ```
 
 or
 
 ```sh
-npm run pod-install
+yarn pod-install
 ```
 
 2. Open your project in Xcode and set up any necessary permissions or settings.
