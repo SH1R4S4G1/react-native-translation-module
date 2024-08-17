@@ -15,8 +15,11 @@
         "!example/android/build",
         "!example/android/app/build"
       ],
-      "outputs": [],
-      "command": "npm run build:android"
+      "outputs": [
+        "example/android/build/**",
+        "example/android/app/build/**"
+      ],
+      "dependsOn": ["^build:android"]
     },
     "build:ios": {
       "env": ["RCT_NEW_ARCH_ENABLED"],
@@ -31,8 +34,11 @@
         "!example/ios/build",
         "!example/ios/Pods"
       ],
-      "outputs": [],
-      "command": "npm run build:ios"
+      "outputs": [
+        "example/ios/build/**",
+        "example/ios/Pods/**"
+      ],
+      "dependsOn": ["^build:ios"]
     }
   }
 }
