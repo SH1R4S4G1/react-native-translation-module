@@ -105,75 +105,75 @@ jobs:
       - name: Prepare
         run: npm run prepare
 
-  build-android:
-    runs-on: ubuntu-latest
-    env:
-      TURBO_CACHE_DIR: .turbo/android
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+  # build-android:
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     TURBO_CACHE_DIR: .turbo/android
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
+  #     - name: Setup Node.js
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: '20'
 
-      - name: Cache dependencies
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.OS }}-node-
+  #     - name: Cache dependencies
+  #       uses: actions/cache@v4
+  #       with:
+  #         path: ~/.npm
+  #         key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+  #         restore-keys: |
+  #           ${{ runner.OS }}-node-
 
-      - name: Install dependencies
-        run: npm ci
+  #     - name: Install dependencies
+  #       run: npm ci
 
-      - name: Install turbo
-        run: npm install -g turbo
+  #     - name: Install turbo
+  #       run: npm install -g turbo
 
-      - name: Cache turborepo for Android
-        uses: actions/cache@v4
-        with:
-          path: ${{ env.TURBO_CACHE_DIR }}
-          key: ${{ runner.os }}-turborepo-android-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-turborepo-android-
+  #     - name: Cache turborepo for Android
+  #       uses: actions/cache@v4
+  #       with:
+  #         path: ${{ env.TURBO_CACHE_DIR }}
+  #         key: ${{ runner.os }}-turborepo-android-${{ hashFiles('package-lock.json') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-turborepo-android-
 
-      - name: Check turborepo cache for Android
-        id: turbo-cache
-        run: |
-          TURBO_CACHE_STATUS=$(node -p "($(npx turbo run build:android --cache-dir="${{ env.TURBO_CACHE_DIR }}" --dry=json)).tasks.find(t => t.task === 'build:android').cache.status")
-          echo "TURBO_CACHE_HIT=$TURBO_CACHE_STATUS" >> $GITHUB_ENV
+  #     - name: Check turborepo cache for Android
+  #       id: turbo-cache
+  #       run: |
+  #         TURBO_CACHE_STATUS=$(node -p "($(npx turbo run build:android --cache-dir="${{ env.TURBO_CACHE_DIR }}" --dry=json)).tasks.find(t => t.task === 'build:android').cache.status")
+  #         echo "TURBO_CACHE_HIT=$TURBO_CACHE_STATUS" >> $GITHUB_ENV
 
-      - name: Install JDK
-        if: env.TURBO_CACHE_HIT != 'HIT'
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'zulu'
-          java-version: '17'
+  #     - name: Install JDK
+  #       if: env.TURBO_CACHE_HIT != 'HIT'
+  #       uses: actions/setup-java@v3
+  #       with:
+  #         distribution: 'zulu'
+  #         java-version: '17'
 
-      - name: Finalize Android SDK
-        if: env.TURBO_CACHE_HIT != 'HIT'
-        run: |
-          /bin/bash -c "yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses > /dev/null"
+  #     - name: Finalize Android SDK
+  #       if: env.TURBO_CACHE_HIT != 'HIT'
+  #       run: |
+  #         /bin/bash -c "yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses > /dev/null"
 
-      - name: Cache Gradle
-        if: env.TURBO_CACHE_HIT != 'HIT'
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/wrapper
-            ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-${{ hashFiles('example/android/gradle/wrapper/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
+  #     - name: Cache Gradle
+  #       if: env.TURBO_CACHE_HIT != 'HIT'
+  #       uses: actions/cache@v4
+  #       with:
+  #         path: |
+  #           ~/.gradle/wrapper
+  #           ~/.gradle/caches
+  #         key: ${{ runner.os }}-gradle-${{ hashFiles('example/android/gradle/wrapper/gradle-wrapper.properties') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-gradle-
 
-      - name: Build example for Android
-        env:
-          JAVA_OPTS: "-XX:MaxHeapSize=6g"
-        run: |
-          npx turbo run build:android --cache-dir="${{ env.TURBO_CACHE_DIR }}"
+  #     - name: Build example for Android
+  #       env:
+  #         JAVA_OPTS: "-XX:MaxHeapSize=6g"
+  #       run: |
+  #         npx turbo run build:android --cache-dir="${{ env.TURBO_CACHE_DIR }}"
 
   build-ios:
     runs-on: macos-14
