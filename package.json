@@ -29,15 +29,18 @@
     "!**/.*"
   ],
   "scripts": {
-    "example": "yarn workspace react-native-translation-module-example",
+    "example": "npm run --prefix example ios",
     "test": "jest",
     "typecheck": "tsc",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
-    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
+    "clean": "del-cli example/ios/build lib",
     "prepare": "bob build",
     "release": "release-it",
-    "pod-install": "cd example && bundle install && bundle exec pod install --project-directory=ios && cd ..",
-    "ios": "yarn pod-install && yarn example ios"
+    "pod-install": "cd example && npm install && bundle install && bundle exec pod install --project-directory=ios && cd ..",
+    "setup": "npm install && npm run pod-install",
+    "ios": "npm run setup && npm run example ios",
+    "start": "npm run --prefix example start",
+    "build:ios": "npm run --prefix example build:ios"
   },
   "keywords": [
     "react-native",
