@@ -21,25 +21,22 @@ class TranslationModule: NSObject {
   func showTranslationPopover(_ text: String, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
     let sanitizedText = self.sanitizeInput(text)
 
-    DispatchQueue.main.async { [self] in
+    DispatchQueue.main.async {
       if #available(iOS 17.4, *) {
-        guard let rootViewController = UIApplication.shared.windows.first?.rootViewController else {
-          reject("ERROR", "No root view controller found", nil)
+        guard let window = UIApplication.shared.windows.first,
+              let rootViewController = window.rootViewController else {
+          reject("ERROR", "No window or root view controller found", nil)
           return
         }
 
-        let hostingController = UIHostingController(rootView: TranslationView(text: sanitizedText) { translatedText in
+        let translationView = TranslationView(text: sanitizedText) { translatedText in
           resolve(translatedText)
-        })
-
-        hostingController.modalPresentationStyle = .popover
-
-        if let popover = hostingController.popoverPresentationController {
-          popover.sourceView = rootViewController.view
-          popover.sourceRect = CGRect(x: rootViewController.view.bounds.midX, y: rootViewController.view.bounds.midY, width: 0, height: 0)
-          popover.permittedArrowDirections = []
+          rootViewController.dismiss(animated: true, completion: nil)
         }
 
+        let hostingController = UIHostingController(rootView: translationView)
+        hostingController.modalPresentationStyle = .overFullScreen
+        hostingController.view.backgroundColor = .clear
         rootViewController.present(hostingController, animated: true, completion: nil)
       } else {
         reject("UNSUPPORTED_OS_VERSION", "iOS 17.4 or newer is required", nil)
@@ -56,7 +53,6 @@ struct TranslationView: View {
   var body: some View {
     if #available(iOS 17.4, *) {
       Color.clear
-        .frame(width: 1, height: 1)
         .translationPresentation(
           isPresented: $isPresented,
           text: text,
