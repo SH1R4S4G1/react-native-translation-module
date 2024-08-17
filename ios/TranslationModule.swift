@@ -29,8 +29,13 @@ class TranslationModule: NSObject {
           return
         }
 
-        let translationView = TranslationView(text: sanitizedText) { translatedText in
-          resolve(translatedText)
+        let translationView = TranslationView(text: sanitizedText) { result in
+          switch result {
+          case .translated(let translatedText):
+            resolve(translatedText)
+          case .cancelled:
+            resolve(sanitizedText) // Return the original text
+          }
           rootViewController.dismiss(animated: true, completion: nil)
         }
 
@@ -45,10 +50,16 @@ class TranslationModule: NSObject {
   }
 }
 
+enum TranslationResult {
+  case translated(String)
+  case cancelled
+}
+
 struct TranslationView: View {
   let text: String
-  let onTranslation: (String) -> Void
+  let onCompletion: (TranslationResult) -> Void
   @State private var isPresented = false
+  @State private var hasCompleted = false
 
   var body: some View {
     if #available(iOS 17.4, *) {
@@ -57,15 +68,26 @@ struct TranslationView: View {
           isPresented: $isPresented,
           text: text,
           replacementAction: { translatedText in
-            onTranslation(translatedText)
-            isPresented = false
+            completeIfNeeded(.translated(translatedText))
           }
         )
+        .onChange(of: isPresented) { newValue in
+          if !newValue {
+            completeIfNeeded(.cancelled)
+          }
+        }
         .onAppear {
           isPresented = true
         }
     } else {
       Text("iOS 17.4 or newer is required")
     }
+  }
+
+  private func completeIfNeeded(_ result: TranslationResult) {
+    guard !hasCompleted else { return }
+    hasCompleted = true
+    isPresented = false
+    onCompletion(result)
   }
 }
