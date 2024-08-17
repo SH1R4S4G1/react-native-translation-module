@@ -1,17 +1,28 @@
-import { useState, useEffect } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import { multiply } from 'react-native-translation-module';
+import { useState } from 'react';
+import { StyleSheet, View, TextInput, Button } from 'react-native';
+import { showTranslationPopover } from 'react-native-translation-module';
 
 export default function App() {
-  const [result, setResult] = useState<number | undefined>();
+  const [text, setText] = useState('');
 
-  useEffect(() => {
-    multiply(3, 7).then(setResult);
-  }, []);
+  const handleTranslation = async () => {
+    if (text.trim()) {
+      const result = await showTranslationPopover(text);
+      setText(result);
+    }
+  };
 
   return (
     <View style={styles.container}>
-      <Text>Result: {result}</Text>
+      <TextInput
+        style={styles.textArea}
+        multiline
+        numberOfLines={4}
+        onChangeText={setText}
+        value={text}
+        placeholder="翻訳したいテキストを入力してください"
+      />
+      <Button title="翻訳" onPress={handleTranslation} />
     </View>
   );
 }
@@ -21,10 +32,14 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    padding: 20,
   },
-  box: {
-    width: 60,
-    height: 60,
-    marginVertical: 20,
+  textArea: {
+    width: '100%',
+    height: 100,
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginBottom: 10,
+    padding: 10,
   },
 });

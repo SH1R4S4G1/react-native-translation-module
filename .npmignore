@@ -1,0 +1,11 @@
+example/
+.gitignore
+.eslintrc.js
+.prettierrc.js
+babel.config.js
+jest.config.js
+lefthook.yml
+tsconfig.json
+tsconfig.build.json
+.github/
+CONTRIBUTING.md
