@@ -2,9 +2,11 @@
 
 ![デモGIF](./assets/demo-01.gif)
 
-iOS17.4以上に追加された標準APIである translation popoverを利用し、React Nativeのアプリ上で簡単に翻訳機能を実装できます！
-Using the translation popover, a standard API added to iOS 17.4 and above, you can easily implement translation functionality on React Native apps!
+iOS17.4以上に追加された標準APIである "Translation"を利用し、React Nativeのアプリ上で簡単に翻訳機能を実装できます！
+Using the "Translation", a standard API added to iOS 17.4 and above, you can easily implement translation functionality on React Native apps!
 
+- Framework Translation
+  https://developer.apple.com/documentation/Translation
 - translationPresentation(isPresented:text:attachmentAnchor:arrowEdge:replacementAction:)
   https://developer.apple.com/documentation/swiftui/view/translationpresentation(ispresented:text:attachmentanchor:arrowedge:replacementaction:)
 
