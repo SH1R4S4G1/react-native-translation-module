@@ -1,5 +1,5 @@
 {
-  "name": "react-native-translation-module",
+  "name": "@sh1r4s4g1/react-native-translation-module",
   "version": "0.1.0",
   "description": "a RTNmodule for TansrationAPI@iOS",
   "source": "./src/index.tsx",
@@ -35,7 +35,9 @@
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
     "prepare": "bob build",
-    "release": "release-it"
+    "release": "release-it",
+    "pod-install": "cd example && bundle install && bundle exec pod install --project-directory=ios && cd ..",
+    "ios": "yarn pod-install && yarn example ios"
   },
   "keywords": [
     "react-native",
@@ -52,7 +54,8 @@
   },
   "homepage": "https://github.com/SH1R4S4G1/react-native-translation-module#readme",
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^17.0.2",

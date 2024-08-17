@@ -1,24 +1,51 @@
-# react-native-translation-module
+# @sh1r4s4g1/react-native-translation-module
 
-a RTNmodule for TansrationAPI@iOS
+a RTNmodule for TranslationAPI@iOS
 
 ## Installation
 
 ```sh
-npm install react-native-translation-module
+npm install @sh1r4s4g1/react-native-translation-module
+```
+
+or
+
+```sh
+yarn add @sh1r4s4g1/react-native-translation-module
 ```
 
 ## Usage
 
-
 ```js
-import { multiply } from 'react-native-translation-module';
+import { showTranslation } from '@sh1r4s4g1/react-native-translation-module';
 
 // ...
 
-const result = await multiply(3, 7);
+try {
+  const translatedText = await showTranslationPopover('Hello, world!');
+  console.log('Translated text:', translatedText);
+} catch (error) {
+  console.error('Translation error:', error);
+}
 ```
 
+## iOS Setup
+
+This module only supports iOS. To use it in an iOS project, follow these steps:
+
+1. Run the following command in the root directory of your project to install the necessary dependencies:
+
+```sh
+yarn pod-install
+```
+
+or
+
+```sh
+npm run pod-install
+```
+
+2. Open your project in Xcode and set up any necessary permissions or settings.
 
 ## Contributing
 
