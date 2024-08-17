@@ -1,6 +1,6 @@
 {
   "name": "@sh1r4s4g1/react-native-translation-module",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "a RTNmodule for TansrationAPI@iOS",
   "source": "./src/index.tsx",
   "main": "./lib/commonjs/index.js",
