@@ -38,7 +38,7 @@ yarn add @sh1r4s4g1/react-native-translation-module
 ## Usage
 
 ```js
-import { showTranslation } from '@sh1r4s4g1/react-native-translation-module';
+import { showTranslationPopover } from '@sh1r4s4g1/react-native-translation-module';
 
 // ...
 

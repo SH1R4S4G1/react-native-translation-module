@@ -32,7 +32,12 @@ jobs:
             ${{ runner.OS }}-node-
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          if [ -f yarn.lock ]; then
+            yarn install --immutable
+          else
+            npm ci
+          fi
 
       - name: Install turbo
         run: npm install -g turbo
@@ -89,7 +94,7 @@ jobs:
 
       - name: Install dependencies (yarn)
         if: matrix.package-manager == 'yarn'
-        run: yarn install --frozen-lockfile
+        run: yarn install --immutable
 
       - name: Install turbo
         run: ${{ matrix.package-manager }} install -g turbo
@@ -120,7 +125,12 @@ jobs:
             ${{ runner.OS }}-node-
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          if [ -f yarn.lock ]; then
+            yarn install --immutable
+          else
+            npm ci
+          fi
 
       - name: Install turbo
         run: npm install -g turbo
@@ -220,7 +230,12 @@ jobs:
             ${{ runner.OS }}-node-
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          if [ -f yarn.lock ]; then
+            yarn install --immutable
+          else
+            npm ci
+          fi
 
       - name: Install turbo
         run: npm install -g turbo

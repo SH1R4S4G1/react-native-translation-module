@@ -188,5 +188,6 @@
     "type": "module-legacy",
     "languages": "kotlin-swift",
     "version": "0.41.0"
-  }
+  },
+  "packageManager": "npm@9.8.1 || yarn@3.6.1"
 }
