@@ -1237,7 +1237,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - react-native-translation-module (0.1.5):
+  - react-native-translation-module (0.1.6):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1757,7 +1757,7 @@ SPEC CHECKSUMS:
   React-logger: 0a81d1a40650bbdafb255fe4616edb83feed0ee9
   React-Mapbuffer: b758bec0d9994c10a2841dfd5ec70673665fd3e2
   React-microtasksnativemodule: f25dba9c8c3f8be0b3368d52b99abd6e381dee1d
-  react-native-translation-module: 4428020d1dc6d1a70306b7abd176b02016181164
+  react-native-translation-module: bd0f2a952a31cf722d5480cda9f568386d4bc2ee
   React-nativeconfig: 7af2ccce165f86b233a9f9d63295f6207e62640e
   React-NativeModulesApple: db1c1ee9dda26c9e58d824b4100fed83add82ae9
   React-perflogger: 7c4e97b47d8bc58c03fad1a6b97d96181b59aa41
