@@ -47,6 +47,9 @@ jobs:
         run: npm run typecheck
 
   test:
+    strategy:
+      matrix:
+        package-manager: [npm, yarn]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -57,25 +60,45 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Cache dependencies
+      - name: Get npm cache directory
+        if: matrix.package-manager == 'npm'
+        id: npm-cache-dir
+        run: echo "dir=$(npm config get cache)" >> $GITHUB_OUTPUT
+
+      - name: Cache npm dependencies
+        if: matrix.package-manager == 'npm'
         uses: actions/cache@v4
         with:
-          path: ~/.npm
-          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.OS }}-npm-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.OS }}-node-
+            ${{ runner.OS }}-npm-
 
-      - name: Install dependencies
+      - name: Cache yarn dependencies
+        if: matrix.package-manager == 'yarn'
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/yarn
+          key: ${{ runner.OS }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.OS }}-yarn-
+
+      - name: Install dependencies (npm)
+        if: matrix.package-manager == 'npm'
         run: npm ci
 
+      - name: Install dependencies (yarn)
+        if: matrix.package-manager == 'yarn'
+        run: yarn install --frozen-lockfile
+
       - name: Install turbo
-        run: npm install -g turbo
+        run: ${{ matrix.package-manager }} install -g turbo
 
       - name: Prepare
-        run: npm run prepare
+        run: ${{ matrix.package-manager }} run prepare
 
       - name: Run unit tests
-        run: npm test
+        run: ${{ matrix.package-manager }} test
 
   build-library:
     runs-on: ubuntu-latest

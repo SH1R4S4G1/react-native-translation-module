@@ -30,17 +30,21 @@
   ],
   "scripts": {
     "example": "npm run --prefix example ios",
+    "example:yarn": "yarn workspace react-native-translation-module-example",
+    "pod-install": "cd example && npm install && bundle install && bundle exec pod install --project-directory=ios && cd ..",
+    "pod-install:yarn": "cd example && bundle install && bundle exec pod install --project-directory=ios && cd ..",
+    "setup": "npm install && npm run pod-install",
+    "setup:yarn": "yarn && yarn pod-install:yarn",
+    "ios": "npm run setup && npm run example ios",
+    "ios:yarn": "yarn setup:yarn && yarn example:yarn ios",
+    "start": "npm run --prefix example start",
+    "build:ios": "npm run --prefix example build:ios",
     "test": "jest",
     "typecheck": "tsc",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "clean": "del-cli example/ios/build lib",
     "prepare": "bob build",
-    "release": "release-it",
-    "pod-install": "cd example && npm install && bundle install && bundle exec pod install --project-directory=ios && cd ..",
-    "setup": "npm install && npm run pod-install",
-    "ios": "npm run setup && npm run example ios",
-    "start": "npm run --prefix example start",
-    "build:ios": "npm run --prefix example build:ios"
+    "release": "release-it"
   },
   "keywords": [
     "react-native",
@@ -95,7 +99,6 @@
   "workspaces": [
     "example"
   ],
-  "packageManager": "npm@9.6.1",
   "jest": {
     "preset": "react-native",
     "modulePathIgnorePatterns": [

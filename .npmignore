@@ -4,6 +4,7 @@ example/
 .prettierrc.js
 babel.config.js
 jest.config.js
+.yarnrc.yml
 lefthook.yml
 tsconfig.json
 tsconfig.build.json

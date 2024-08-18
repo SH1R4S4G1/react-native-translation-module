@@ -6,18 +6,22 @@ We want this community to be friendly and respectful to each other. Please follo
 
 ## Development workflow
 
-This project is a monorepo managed using [Yarn workspaces](https://yarnpkg.com/features/workspaces). It contains the following packages:
+This project contains the following packages:
 
 - The library package in the root directory.
 - An example app in the `example/` directory.
 
-To get started with the project, run `yarn` in the root directory to install the required dependencies for each package:
+To get started with the project, run either `npm install` or `yarn` in the root directory to install the required dependencies for each package:
+
+```sh
+npm install
+```
+
+or
 
 ```sh
 yarn
 ```
-
-> Since the project relies on Yarn workspaces, you cannot use [`npm`](https://github.com/npm/cli) for development.
 
 The [example app](/example/) demonstrates usage of the library. You need to run it to test any changes you make.
 
@@ -32,35 +36,80 @@ You can use various commands from the root directory to work with the project.
 To start the packager:
 
 ```sh
-yarn example start
+npm run setup
 ```
 
-To run the example app on Android:
+or
 
 ```sh
-yarn example android
+yarn setup:yarn
 ```
+
+<!-- To run the example app on Android:
+
+```sh
+npm run android
+```
+
+or
+
+```sh
+yarn android
+``` -->
 
 To run the example app on iOS:
 
 ```sh
-yarn example ios
+npm run ios
+```
+
+or
+
+```sh
+yarn ios
 ```
 
 Make sure your code passes TypeScript and ESLint. Run the following to verify:
 
 ```sh
+npm run typecheck
+```
+
+or
+
+```sh
 yarn typecheck
+```
+
+```sh
+npm run lint
+```
+
+or
+
+```sh
 yarn lint
 ```
 
 To fix formatting errors, run the following:
 
 ```sh
+npm run lint --fix
+```
+
+or
+
+```sh
 yarn lint --fix
 ```
 
 Remember to add tests for your change if possible. Run the unit tests by:
+
+```sh
+npm test
+```
+
+or
 
 ```sh
 yarn test
@@ -94,6 +143,12 @@ We use [release-it](https://github.com/release-it/release-it) to make it easier 
 To publish new versions, run the following:
 
 ```sh
+npm run release
+```
+
+or
+
+```sh
 yarn release
 ```
 
@@ -101,13 +156,17 @@ yarn release
 
 The `package.json` file contains various scripts for common tasks:
 
-- `yarn`: setup project by installing dependencies.
-- `yarn typecheck`: type-check files with TypeScript.
-- `yarn lint`: lint files with ESLint.
-- `yarn test`: run unit tests with Jest.
-- `yarn example start`: start the Metro server for the example app.
-- `yarn example android`: run the example app on Android.
-- `yarn example ios`: run the example app on iOS.
+- `npm install` or `yarn`: setup project by installing dependencies.
+- `npm run typecheck` or `yarn typecheck`: type-check files with TypeScript.
+- `npm run lint` or `yarn lint`: lint files with ESLint.
+- `npm test` or `yarn test`: run unit tests with Jest.
+- `npm run --prefix example start` or `yarn workspace react-native-translation-module-example`: start the Metro server for the example app.
+- `npm run setup && npm run example ios` or `yarn setup:yarn && yarn example:yarn ios`: setup the project, install dependencies, and run the example app on iOS.
+- `npm run example` or `yarn example`: run the example app on iOS.
+- `npm run pod-install` or `yarn pod-install`: install CocoaPods dependencies for the example app.
+- `npm run clean` or `yarn clean`: clean build artifacts.
+- `npm run prepare` or `yarn prepare`: build the project using react-native-builder-bob.
+- `npm run release` or `yarn release`: publish a new version using release-it.
 
 ### Sending a pull request
 
